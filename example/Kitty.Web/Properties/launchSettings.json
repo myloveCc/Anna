@@ -19,11 +19,11 @@
     "Kitty.Web": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "http://localhost:50000/api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:46361/"
+      "applicationUrl": "http://localhost:50000/"
     }
   }
 }

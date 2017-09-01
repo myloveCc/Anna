@@ -20,12 +20,14 @@ namespace Kitty.Web
         public static IWebHost BuildWebHost(string[] args)
         {
             var config = new ConfigurationBuilder()
+               .SetBasePath(Directory.GetCurrentDirectory())
                .AddJsonFile("hosting.json", optional: true)
                .AddCommandLine(args)
                .Build();
 
             return WebHost.CreateDefaultBuilder(args)
                       .UseConfiguration(config)
+                      .UseContentRoot(Directory.GetCurrentDirectory())
                       .UseStartup<Startup>()
                       .Build();
         }
