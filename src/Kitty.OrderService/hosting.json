@@ -1,0 +1,4 @@
+{
+  "server.urls": "http://192.168.8.1:60002",
+  "environment": "Development" //Production
+}
