@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Consul;
-using Kitty.ServicesRegister;
+using Kitty.ConsulService;
+using Kitty.ConsulService.ServiceProvider;
 using Kitty.ServiceConfig;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,14 +25,17 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddKitty(this IServiceCollection services, IConfiguration Configuration)
         {
             // Add consul client
-            services.Configure<ServiceRegisterConfig>(Configuration.GetSection("ServiceRegisterConfig"));
+            services.Configure<ConsulConfig>(Configuration.GetSection("ConsulConfig"));
             services.AddSingleton<IConsulClient, ConsulClient>(m => new ConsulClient(config =>
             {
-                var addrss = Configuration["ServiceRegisterConfig:ConsulAddress"] ?? "localhost:8500";
+                var addrss = Configuration["ConsulConfig:ServiceRegisterConfig:ConsulAddress"] ?? "localhost:8500";
                 config.Address = new Uri(addrss);
             }));
 
             services.TryAddSingleton<IHostedService, KittyHostedService>();
+
+            services.TryAddScoped<IKittyServiceProvider, KittyServiceProvider>();
+
             return services;
         }
     }

@@ -1,0 +1,35 @@
+{
+  "ConsulConfig": {
+    "ServiceRegisterConfig": {
+      "ConsulAddress": "http://192.168.186.128:8500",
+      "Service": {
+        "ServiceId": "kitty-order-service",
+        "ServiceName": "kitty-order-service",
+        "Tags": [
+          "order",
+          "version-1"
+        ],
+        "HealthChecks": [
+          {
+            "HttpApi": "api/health",
+            "Interval": 10,
+            "Timeout": 3
+          }
+        ]
+      }
+    },
+    "ServiceDiscoveryConfig": {
+      "Services": [
+        {
+          "ConsulAddress": "http://192.168.186.128:8500",
+          "ServiceId": "kitty-user-service",
+          "ServiceName": "kitty-user-service",
+          "Tags": [
+            "user",
+            "version-1"
+          ]
+        }
+      ]
+    }
+  }
+}

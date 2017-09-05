@@ -11,13 +11,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Kitty.ServicesRegister
+namespace Kitty.ConsulService
 {
     public class KittyHostedService:IHostedService
     {
         private CancellationTokenSource _cts;
         private readonly IConsulClient _consulClient;
-        private readonly IOptions<ServiceRegisterConfig> _consulConfig;
+        private readonly IOptions<ConsulConfig> _consulConfig;
         private readonly ILogger<KittyHostedService> _logger;
         private readonly IServer _server;
         private string _registrationID;
@@ -29,7 +29,7 @@ namespace Kitty.ServicesRegister
         /// <param name="consulConfig"></param>
         /// <param name="logger"></param>
         /// <param name="server"></param>
-        public KittyHostedService(IConsulClient consulClient, IOptions<ServiceRegisterConfig> consulConfig, ILogger<KittyHostedService> logger, IServer server)
+        public KittyHostedService(IConsulClient consulClient, IOptions<ConsulConfig> consulConfig, ILogger<KittyHostedService> logger, IServer server)
         {
             _server = server;
             _logger = logger;
@@ -94,7 +94,7 @@ namespace Kitty.ServicesRegister
 
             var uri = new Uri(address);
 
-            var service = _consulConfig.Value.Service;
+            var service = _consulConfig.Value.ServiceRegisterConfig.Service;
 
             _registrationID = $"{service.ServiceId}-{uri.Port}";
 
